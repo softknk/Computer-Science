@@ -1,4 +1,4 @@
-package different;
+package algorithms;
 
 public class AddOneProblem {
 

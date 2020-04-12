@@ -1,4 +1,4 @@
-package different;
+package algorithms;
 
 import java.util.HashSet;
 import java.util.Set;
