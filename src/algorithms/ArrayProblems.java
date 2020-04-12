@@ -35,7 +35,7 @@ public class ArrayProblems {
             slow = n[slow];
             fast = n[n[fast]];
         }
-        //find entry point of cycle
+        //find entry point of the cycle
         fast = 0;
         while (slow != fast) {
             slow = n[slow];
