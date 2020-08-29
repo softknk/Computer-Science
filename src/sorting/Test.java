@@ -9,14 +9,20 @@ public class Test {
 
     public static void main(String[] args) {
        // testBubblesort();
+        testSelectionSort();
        // testInsertionsort();
        // testQuicksort();
        // testRadixsort();
-        testMergesort();
+       // testMergesort();
     }
 
     private static void testBubblesort() {
         Bubblesort.sort(items);
+        print(items);
+    }
+
+    private static void testSelectionSort() {
+        Selectionsort.sort(items);
         print(items);
     }
 
