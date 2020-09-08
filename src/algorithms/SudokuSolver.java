@@ -1,6 +1,6 @@
 package algorithms;
 
-public class SodokuSolver {
+public class SudokuSolver {
 
     static int[][] sodoku = {
             {9, 0, 0, 1, 0, 0, 0, 0, 5},
