@@ -7,10 +7,6 @@ import java.nio.file.Paths;
 public class Backup {
 
     /**
-     * you have to specify the right path regarding to your os
-     */
-
-    /**
      * makes a backup of all the files in the source folder and saves them in the backup folder
      * @param sourceFolder
      * @param backupFolder

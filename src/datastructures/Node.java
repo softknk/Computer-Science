@@ -1,5 +1,9 @@
 package datastructures;
 
+/**
+ * defines a Node for a simple Linked List
+ * @param <T>
+ */
 public class Node<T> {
 
     public T data;
