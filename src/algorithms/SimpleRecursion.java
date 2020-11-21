@@ -24,7 +24,7 @@ public class SimpleRecursion {
         else if (map.containsKey(n))
             return map.get(n);
         else {
-            int result = fib(n-1) + fib(n-2);
+            int result = fib_dynamic(n-1, map) + fib_dynamic(n-2, map);
             map.put(n, result);
             return result;
         }
