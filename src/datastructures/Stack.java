@@ -1,5 +1,7 @@
 package datastructures;
 
+import datastructures.list.Node;
+
 import java.lang.reflect.Array;
 
 public class Stack<T> implements StackOperation<T> {

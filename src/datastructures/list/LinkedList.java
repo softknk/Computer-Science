@@ -1,11 +1,11 @@
-package datastructures;
+package datastructures.list;
 
-public class List<T> {
+public class LinkedList<T> implements List<T> {
 
     private Node<T> head;
     private int size;
 
-    public List() {
+    public LinkedList() {
         size = 0;
     }
 
@@ -19,11 +19,6 @@ public class List<T> {
             tmp.next = new Node(item, null);
         }
         size++;
-    }
-
-    public void addAll(T... items) {
-        for (T item : items)
-            add(item);
     }
 
     public T get(int index) {
@@ -75,15 +70,18 @@ public class List<T> {
     }
 
     public boolean contains(T item) {
+        boolean contains = false;
         if (head != null) {
             Node<T> tmp = head;
             while (tmp != null) {
-                if (tmp.data.equals(item))
-                    return true;
+                if (tmp.data.equals(item)) {
+                    contains = true;
+                    break;
+                }
                 tmp = tmp.next;
             }
         }
-        return false;
+        return contains;
     }
 
     public boolean isEmpty() {
@@ -96,23 +94,5 @@ public class List<T> {
 
     public Iterator<T> iterator() {
         return new Iterator<>(head);
-    }
-
-    public class Iterator<E> {
-        private Node<E> current;
-
-        public Iterator(Node<E> start) {
-            current = start;
-        }
-
-        public boolean hasNext() {
-            return current != null;
-        }
-
-        public E next() {
-            E tmp = current.data;
-            current = current.next;
-            return tmp;
-        }
     }
 }

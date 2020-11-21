@@ -1,4 +1,4 @@
-package datastructures;
+package datastructures.list;
 
 /**
  * defines a Node for a simple Linked List

@@ -1,5 +1,7 @@
 package datastructures;
 
+import datastructures.list.Node;
+
 public class Queue<T> implements QueueOperations<T> {
 
     private Node<T> head, tail;

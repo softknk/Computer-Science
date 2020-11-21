@@ -5,7 +5,7 @@ import datastructures.Graph.Node;
 
 import java.util.*;
 
-public class Dijkstra {
+public class AStar {
 
     public static void findShortestPath(Graph<Node> graph, Node start) {
         Set<Node> openList = new HashSet<>();
@@ -19,7 +19,7 @@ public class Dijkstra {
         Node current;
 
         while (!openList.isEmpty()) {
-            current = getNodeWithLowestDistanceOf(openList);
+            current = getNodeWithLowestCosts(openList);
 
             for (Map.Entry<Node, Integer> adjacent : current.getAdjacents().entrySet()) {
                 if (!closedList.contains(adjacent.getKey())) {
@@ -28,23 +28,22 @@ public class Dijkstra {
                 }
             }
 
-            openList.remove(current);
             closedList.add(current);
         }
     }
 
     /**
-     * return the node with the lowest distance
+     * return the node with the lowest costs (distance + heuristic)
      * @param set set of nodes
      * @return node with lowest distance
      */
-    private static Node getNodeWithLowestDistanceOf(Set<Node> set) {
-        int lowest_distance = Integer.MAX_VALUE;
+    private static Node getNodeWithLowestCosts(Set<Node> set) {
+        int lowest_costs = Integer.MAX_VALUE;
         Node lowest = null;
         for (Node item : set) {
-            if (item.getDistance() < lowest_distance) {
+            if (item.getCosts() < lowest_costs) {
                 lowest = item;
-                lowest_distance = item.getDistance();
+                lowest_costs = item.getDistance();
             }
         }
         return lowest;
@@ -56,7 +55,7 @@ public class Dijkstra {
      * @param edgeWeight edgeWeight to get from source to destination
      * @param source node from where we came
      */
-    private static void calculateShortestDistance(Node destination, int edgeWeight, Node source) {
+    private static void calculateShortestDistance(Graph.Node destination, int edgeWeight, Graph.Node source) {
         if (destination.getDistance() > source.getDistance() + edgeWeight) {
             destination.setDistance(source.getDistance() + edgeWeight);
             destination.setPrevious(source);
