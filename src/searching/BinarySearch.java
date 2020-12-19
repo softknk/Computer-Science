@@ -5,35 +5,24 @@ public class BinarySearch {
     //works only for sorted arrays
     public static int binarySearch(int[] items, int value) {
         int start = 0, end = items.length - 1;
-        int pointer;
-        while (end - start > 0) {
-            pointer = start + (end - start) / 2;
-            if (items[pointer] == value) {
-                return pointer;
-            } else if (items[pointer] > value) {
-                end = pointer - 1;
-            } else {
-                start = pointer + 1;
-            }
+        while (start < end) {
+            int mid = (start + end) / 2;
+            if (items[mid] == value) return mid;
+            else if (items[mid] > value) end = mid - 1;
+            else start = mid + 1;
         }
-        if (items[start] == value)
-            return start;
-        else
-            return -1;
+        return (items[start] == value) ? start : -1;
     }
 
     public static int binarySearchRecursive(int[] items, int value, int start, int end) {
-        if (end - start < 1)
+        if (start >= end)
             return (items[start] == value) ? start : -1;
 
-        int pointer = start + (end - start) / 2;
+        int mid = (start + end) / 2;
 
-        if (items[pointer] == value)
-            return pointer;
-        else if (items[pointer] > value)
-            return binarySearchRecursive(items, value, start, pointer - 1);
-        else
-            return binarySearchRecursive(items, value, pointer + 1, end);
+        if (items[mid] == value) return mid;
+        else if (items[mid] > value) return binarySearchRecursive(items, value, start, mid - 1);
+        else return binarySearchRecursive(items, value, mid + 1, end);
     }
 
     public static void main(String[] args) {
