@@ -1,88 +1,82 @@
 package datastructures.list;
 
 import java.lang.reflect.Array;
+import java.util.function.Consumer;
 
-public class ArrayList<T> implements List<T> {
+public class ArrayList<T> {
 
-    private final Class<T> type;
     private T[] data;
+    private final int startCapacity = 2;
+    private final int increaseRate = 2;
+    private int currIndex;
+    private Class<T> type;
 
     public ArrayList(Class<T> type) {
+        currIndex = 0;
+        data = (T[]) Array.newInstance(type, startCapacity);
         this.type = type;
-        data = getArrayOfLength(0);
     }
 
-    private T[] getArrayOfLength(int length) {
-        return (T[]) Array.newInstance(type, length);
-    }
-
-    @Override
     public void add(T item) {
-        copyOldAddNew(getArrayOfLength(data.length + 1), item);
+        if (currIndex >= data.length) resizeArray();
+        data[currIndex] = item;
+        currIndex++;
     }
 
-    private void copyOldAddNew(T[] newData, T item) {
-        for (int i = 0; i < data.length; i++)
-            newData[i] = data[i];
-        newData[newData.length - 1] = item;
-        data = newData;
-    }
-
-    @Override
     public T get(int index) {
-        return data[index];
+        if (index < currIndex) return data[index];
+        else return null;
     }
 
-    @Override
-    public boolean remove(T item) {
-        for (int i = 0; i < data.length; i++) {
-            if (item.equals(data[i]))
-                return moveDownDataFrom(i);
+    public void removeAt(int index) {
+        if (index < currIndex) {
+            for (int i = index; i < data.length - 1; i++) data[i] = data[i+1];
+            data[data.length-1] = null;
+            currIndex--;
         }
-        return false;
     }
 
-    @Override
-    public boolean removeAt(int index) {
-        return moveDownDataFrom(index);
+    private void resizeArray() {
+        T[] new_data = (T[]) Array.newInstance(type, data.length * increaseRate);
+        for (int i = 0; i < data.length; i++) new_data[i] = data[i];
+        data = new_data;
     }
 
-    private boolean moveDownDataFrom(int index) {
-        if (index >= data.length || index < 0)
-            return false;
-
-        for (int i = index; i < data.length - 1; i++)
-            data[i] = data[i+1];
-
-        T[] newData = getArrayOfLength(data.length - 1);
-
-        for (int i = 0; i < data.length - 1; i++)
-            newData[i] = data[i];
-
-        data = newData;
-
-        return true;
-    }
-
-    @Override
-    public boolean contains(T item) {
-        boolean contains = false;
-        for (T datum : data) {
-            if (datum.equals(item)) {
-                contains = true;
-                break;
-            }
-        }
-        return contains;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return data.length == 0;
-    }
-
-    @Override
     public int size() {
+        return currIndex;
+    }
+
+    public void forEach(Consumer<? super T> action) {
+        for (int i = 0; i < currIndex; i++) action.accept(data[i]);
+    }
+
+    // debugging purpose
+    public int getArrayLength() {
         return data.length;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("{");
+        for (int i = 0; i < currIndex; i++) builder.append(data[i]).append(", ");
+        return builder.substring(0, builder.length() - 2) + "}";
+    }
+}
+
+class Main {
+
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>(String.class);
+        list.add("This");
+        list.add("is");
+        list.add("a");
+        list.removeAt(1);
+        list.add("test");
+        list.add("arrayList");
+        System.out.println(list);
+        System.out.println(list.getArrayLength());
+        System.out.println(list.size());
+        list.forEach(System.out::println);
     }
 }
